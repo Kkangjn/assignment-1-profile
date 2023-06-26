@@ -62,7 +62,22 @@ public class ProfileController {
                 throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
             }
         }else {
-            throw new IllegalArgumentException("게시글이 존재하지 ");
+            throw new IllegalArgumentException("게시글이 존재하지 않습니다.");
+        }
+    }
+
+    @DeleteMapping("/profile/{id}")
+    public String deleteProfile(@PathVariable long id, @RequestBody String pw){
+        if(profileList.containsKey(id)){
+            Profile profile = profileList.get(id);
+            if (profile.getPw().equals(pw)){ // 비밀번호 확인
+                profileList.remove(profile.getId());
+                return "게시글이 삭제되었습니다.";
+            } else {
+                throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+            }
+        }else {
+            throw new IllegalArgumentException("게시글이 존재하지 않습니다.");
         }
     }
 }
@@ -73,3 +88,4 @@ public class ProfileController {
 // ProfileResponseDto responseProfile = new ProfileResponseDto(profileOrigin); // 원본을 다시 보내는 느낌이라 별로임
 // if (profileReversion.getPw().equals(profileChange.getPw())){ 바꿨더니 여기가 맘에 안든다.. 그냥 넘어감
 // throw new IllegalArgumentException("비밀번호가 일치하지 않습니다."); 이게 postman에 뜰줄 알았는데 intellij에 뜸, 일단 뜨긴하니깐 넘어감
+// 비밀번호를 String 으로 받았는데 문제 없을까?, Postman에서 삭제는 잘되는거 확인(raw-text-1234)
