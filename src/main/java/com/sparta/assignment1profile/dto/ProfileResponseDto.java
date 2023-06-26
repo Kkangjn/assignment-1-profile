@@ -19,5 +19,6 @@ public class ProfileResponseDto {
         this.name = profile.getName();
         this.contents = profile.getContents();
         this.createAt = profile.getCreateAt();
+        this.updateAt = profile.getUpdateAt();
     }
 }
