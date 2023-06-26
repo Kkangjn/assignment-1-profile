@@ -23,4 +23,11 @@ public class Profile {
        this.contents = requestDto.getContents();
        this.pw = requestDto.getPw();
     }
+
+    public void update(Profile profileChange) {
+        this.title = profileChange.getTitle();
+        this.name = profileChange.getName();
+        this.contents = profileChange.getContents();
+        this.updateAt = profileChange.getUpdateAt();
+    }
 }
