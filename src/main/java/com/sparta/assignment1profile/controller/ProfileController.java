@@ -36,6 +36,17 @@ public class ProfileController {
         // 맵으로된 프로필리스트(id,profile)의. value값들(Porfile). 반복해줘. ProfileResponseDto로 만들어. 리스트로 바꿔줘;
         return responseList;
     }
-    // 시간이 안바뀜! final로 지정해서 그런가? // 여전히 처음에서 안바뀜;;
-    // Class 필드로 선언 및 생성을 해줘서 그런듯 // 선언만 하고 메서드 내부에서 입력해주면? 성공(POST image 4,5)
+
+    @GetMapping("/profile/{id}")
+    public ProfileResponseDto getprofile(@PathVariable long id){
+        if (profileList.containsKey(id)){ // id가 있는지 확인
+            ProfileResponseDto responseProfile = new ProfileResponseDto(profileList.get(id));
+            return responseProfile;
+        } else {
+            throw new IllegalArgumentException("게시글이 존재하지 않습니다.");
+        }
+    }
 }
+// 시간이 안바뀜! final로 지정해서 그런가? // 여전히 처음에서 안바뀜;;
+// Class 필드로 선언 및 생성을 해줘서 그런듯 // 선언만 하고 메서드 내부에서 입력해주면? 성공(POST image 4,5)
+// 시작할때 착각해서 문제발생 - 게시글인데 명명을 profile로 하니깐 좀 이상함;; -> 바꾸려다 포기함 다음에는 신경쓰자!
