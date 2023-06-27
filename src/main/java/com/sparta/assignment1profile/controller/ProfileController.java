@@ -16,8 +16,6 @@ import java.util.Map;
 @RequestMapping("/api")
 public class ProfileController {
     private final ProfileService profileService;
-    private final Map<Long, Profile> profileList = new HashMap<>();
-    private LocalDateTime currentTime;
 
     public ProfileController(ProfileService profileService) {
         this.profileService = profileService;
@@ -32,50 +30,50 @@ public class ProfileController {
     public List<ProfileResponseDto> getProfiles(){
         return profileService.getProfiles();
     }
+//
+//    @GetMapping("/profile/{id}")
+//    public ProfileResponseDto getprofile(@PathVariable long id){
+//        if (profileList.containsKey(id)){ // id가 있는지 확인
+//            ProfileResponseDto responseProfile = new ProfileResponseDto(profileList.get(id));
+//            return responseProfile;
+//        } else {
+//            throw new IllegalArgumentException("게시글이 존재하지 않습니다.");
+//        }
+//    }
 
-    @GetMapping("/profile/{id}")
-    public ProfileResponseDto getprofile(@PathVariable long id){
-        if (profileList.containsKey(id)){ // id가 있는지 확인
-            ProfileResponseDto responseProfile = new ProfileResponseDto(profileList.get(id));
-            return responseProfile;
-        } else {
-            throw new IllegalArgumentException("게시글이 존재하지 않습니다.");
-        }
-    }
-
-    @PutMapping("/profile/{id}")
-    public ProfileResponseDto updateProfile(@PathVariable long id, @RequestBody ProfileRequestDto requestDto){
-        if(profileList.containsKey(id)){
-            Profile profileReversion = profileList.get(id);
-            Profile profileChange = new Profile(requestDto);
-            currentTime = LocalDateTime.now();
-            profileChange.setUpdateAt(currentTime);
-            if (profileReversion.getPw().equals(profileChange.getPw())){ // 비밀번호 확인
-                profileReversion.update(profileChange);
-                ProfileResponseDto responseProfile = new ProfileResponseDto(profileReversion);
-                return responseProfile;
-            } else {
-                throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
-            }
-        }else {
-            throw new IllegalArgumentException("게시글이 존재하지 않습니다.");
-        }
-    }
-
-    @DeleteMapping("/profile/{id}")
-    public String deleteProfile(@PathVariable long id, @RequestBody String pw){
-        if(profileList.containsKey(id)){
-            Profile profile = profileList.get(id);
-            if (profile.getPw().equals(pw)){ // 비밀번호 확인
-                profileList.remove(profile.getId());
-                return "게시글이 삭제되었습니다.";
-            } else {
-                throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
-            }
-        }else {
-            throw new IllegalArgumentException("게시글이 존재하지 않습니다.");
-        }
-    }
+//    @PutMapping("/profile/{id}")
+//    public ProfileResponseDto updateProfile(@PathVariable long id, @RequestBody ProfileRequestDto requestDto){
+//        if(profileList.containsKey(id)){
+//            Profile profileReversion = profileList.get(id);
+//            Profile profileChange = new Profile(requestDto);
+//            currentTime = LocalDateTime.now();
+//            profileChange.setUpdateAt(currentTime);
+//            if (profileReversion.getPw().equals(profileChange.getPw())){ // 비밀번호 확인
+//                profileReversion.update(profileChange);
+//                ProfileResponseDto responseProfile = new ProfileResponseDto(profileReversion);
+//                return responseProfile;
+//            } else {
+//                throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+//            }
+//        }else {
+//            throw new IllegalArgumentException("게시글이 존재하지 않습니다.");
+//        }
+//    }
+//
+//    @DeleteMapping("/profile/{id}")
+//    public String deleteProfile(@PathVariable long id, @RequestBody String pw){
+//        if(profileList.containsKey(id)){
+//            Profile profile = profileList.get(id);
+//            if (profile.getPw().equals(pw)){ // 비밀번호 확인
+//                profileList.remove(profile.getId());
+//                return "게시글이 삭제되었습니다.";
+//            } else {
+//                throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+//            }
+//        }else {
+//            throw new IllegalArgumentException("게시글이 존재하지 않습니다.");
+//        }
+//    }
 }
 // 시간이 안바뀜! final로 지정해서 그런가? // 여전히 처음에서 안바뀜;;
 // Class 필드로 선언 및 생성을 해줘서 그런듯 // 선언만 하고 메서드 내부에서 입력해주면? 성공(POST image 4,5)

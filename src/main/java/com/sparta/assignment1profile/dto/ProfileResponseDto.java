@@ -5,6 +5,7 @@ import lombok.Getter;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+
 @Getter
 public class ProfileResponseDto {
     private long id;
@@ -28,7 +29,5 @@ public class ProfileResponseDto {
         this.title = title;
         this.name = name;
         this.contents = contents;
-        this.createAt = createAt.toLocalDateTime();
-        this.updateAt = updateAt.toLocalDateTime();
     }
 }

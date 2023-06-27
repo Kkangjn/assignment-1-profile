@@ -6,8 +6,6 @@ import com.sparta.assignment1profile.entity.Profile;
 import com.sparta.assignment1profile.repository.ProfileRepository;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -21,12 +19,11 @@ public class ProfileService {
     public ProfileResponseDto createProfile(ProfileRequestDto requestDto) {
         Profile profile = new Profile(requestDto);
         Profile saveProfile = profileRepository.save(profile);
-
         ProfileResponseDto responseDto = new ProfileResponseDto(saveProfile);
         return responseDto;
     }
 
     public List<ProfileResponseDto> getProfiles() {
-        return profileRepository.findAll();
+        return profileRepository.findAllByOrderByIdDesc().stream().map(ProfileResponseDto::new).toList();
     }
 }

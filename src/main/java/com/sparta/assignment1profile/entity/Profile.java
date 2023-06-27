@@ -1,21 +1,30 @@
 package com.sparta.assignment1profile.entity;
 
 import com.sparta.assignment1profile.dto.ProfileRequestDto;
+import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+@Entity
 @Getter
 @Setter
-public class Profile {
+@Table(name = "profile")
+@NoArgsConstructor
+public class Profile extends Timestamped {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Column(name = "title", nullable = false)
     private String title;
+    @Column(name = "name", nullable = false)
     private String name;
+    @Column(name = "contents", nullable = false, length = 500)
     private String contents;
+    @Column(name = "pw", nullable = false)
     private String pw;
-    private LocalDateTime createAt;
-    private LocalDateTime updateAt;
 
     public Profile(ProfileRequestDto requestDto) {
        this.title = requestDto.getTitle();
@@ -28,6 +37,5 @@ public class Profile {
         this.title = profileChange.getTitle();
         this.name = profileChange.getName();
         this.contents = profileChange.getContents();
-        this.updateAt = profileChange.getUpdateAt();
     }
 }
