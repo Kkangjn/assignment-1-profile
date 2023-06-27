@@ -6,8 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
-
 @Entity
 @Getter
 @Setter
@@ -33,9 +31,9 @@ public class Profile extends Timestamped {
        this.pw = requestDto.getPw();
     }
 
-    public void update(Profile profileChange) {
-        this.title = profileChange.getTitle();
-        this.name = profileChange.getName();
-        this.contents = profileChange.getContents();
+    public void update(ProfileRequestDto requestDto) {
+        this.title = requestDto.getTitle();
+        this.name = requestDto.getName();
+        this.contents = requestDto.getContents();
     }
 }
