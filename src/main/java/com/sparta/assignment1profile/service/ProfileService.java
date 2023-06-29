@@ -34,12 +34,14 @@ public class ProfileService {
     }
     @Transactional
     public ProfileResponseDto updateProfile(long id, ProfileRequestDto requestDto) {
-        Profile profile = findProfile(id, requestDto.getPw());
+        Profile profile = findProfile(id);
+        checkPw(profile.getPw(), requestDto.getPw());
         profile.update(requestDto);
         return new ProfileResponseDto(profile);
     }
     public String deleteProfile(long id, String pw) {
-        Profile profile = findProfile(id, pw);
+        Profile profile = findProfile(id);
+        checkPw(profile.getPw(), pw);
         profileRepository.delete(profile);
         return "게시글이 삭제되었습니다.";
     }
@@ -50,9 +52,15 @@ public class ProfileService {
         );
     }
 
-    private Profile findProfile(long id, String pw) {
-        return profileRepository.findByIdAndPw(id,pw).orElseThrow(() ->
-                new IllegalArgumentException("게시글이 존재하지 않거나 비밀번호가 틀렸습니다.")
-        );
+    private void checkPw(String idPw, String inputPw) {
+        if(!idPw.equals(inputPw)){
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+        }
     }
 }
+// 비밀번호 확인 따로 빼기
+//    private Profile findProfile(long id, String pw) {
+//        return profileRepository.findByIdAndPw(id,pw).orElseThrow(() ->
+//                new IllegalArgumentException("게시글이 존재하지 않거나 비밀번호가 틀렸습니다.")
+//        );
+//    }

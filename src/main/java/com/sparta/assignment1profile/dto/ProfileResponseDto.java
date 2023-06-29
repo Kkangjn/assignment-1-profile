@@ -23,11 +23,4 @@ public class ProfileResponseDto {
         this.createAt = profile.getCreateAt();
         this.updateAt = profile.getUpdateAt();
     }
-
-    public ProfileResponseDto(Long id, String title, String name, String contents, Timestamp createAt, Timestamp updateAt) {
-        this.id = id;
-        this.title = title;
-        this.name = name;
-        this.contents = contents;
-    }
 }
